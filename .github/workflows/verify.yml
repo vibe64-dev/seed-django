@@ -1,0 +1,22 @@
+name: Verify
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - run: python -m venv .venv
+      - run: .venv/bin/python -m pip install -r requirements.txt
+      - run: .venv/bin/python scripts/create_dev_secret_key.py
+      - run: .venv/bin/python manage.py makemigrations --check --dry-run
+      - run: .venv/bin/python manage.py test --noinput

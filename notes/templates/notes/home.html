@@ -1,0 +1,21 @@
+{% extends "notes/base.html" %}
+
+{% block content %}
+  <form method="post" class="note-form">
+    {% csrf_token %}
+    {{ form.text.label_tag }}
+    <div class="row">
+      {{ form.text }}
+      <button type="submit">Save</button>
+    </div>
+    {{ form.text.errors }}
+  </form>
+
+  <ul class="notes">
+    {% for note in notes %}
+      <li><span>{{ note.text }}</span> <time datetime="{{ note.created_at|date:'c' }}">{{ note.created_at|date:"j M Y, H:i" }}</time></li>
+    {% empty %}
+      <li class="empty">No notes yet.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

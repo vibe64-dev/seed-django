@@ -1,0 +1,19 @@
+{% load static %}<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Notes{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'notes/site.css' %}">
+</head>
+<body>
+  <main>
+    {% if messages %}
+      <ul class="messages" role="status">
+        {% for message in messages %}<li>{{ message }}</li>{% endfor %}
+      </ul>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>
